@@ -26,6 +26,7 @@ function fm(){
   function render (text){
 
     newRules.forEach(function(rules){
+      var callback = typeof rules[2] == 'function' ? rules[2] : false
       var regx = new RegExp(qm(rules[0]) + '([\\s\\S]*?)' + qm(rules[1]))
       var matching = true;
       var matches = []
@@ -48,7 +49,10 @@ function fm(){
         }
 
         if(test){
-          slice = slice.replace(trgx, rules[2] + render(test[1]) + rules[3])
+          if(callback){
+            slice = slice.replace(trgx, callback(render(test[1]), test))
+          }
+          else slice = slice.replace(trgx, rules[2] + render(test[1]) + rules[3])
           text = text.slice(0, i) + slice
         }
         else matching = false

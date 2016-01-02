@@ -18,6 +18,13 @@ flayvaMayka.bracketize('++', '++', '<span class="drank">','</span>');
 
 flayvaMayka.bracketize('$+', '+$', '<h1 class="grill">','</h1>');
 
+// you can also pass a callback instead of new rules, so you can inspect the contents of your brackets
+flayvaMayka.bracketize('++', '++', function(content, match){
+  // the return value of your callback will be the new content, replacing the brackets + content
+  if(content === 'world') return '<h1 class=huge>' + content + '</h1>'
+  else return '<span class=normal>' + content + '</span>'
+})
+
 // Outputs <p><strong>This drank.</strong> It's got that <span class="drank">purple</span>.
 flayvaMayka.render("**This drank.** It's got that ++purple++"), 
 

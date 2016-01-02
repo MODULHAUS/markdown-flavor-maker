@@ -3,6 +3,23 @@ var marked = require('marked')
 var flavorMaker = require('./')
 var fs = require('fs');
 
+test('callbacks', function(t){
+  var fm = flavorMaker()
+
+  fm.bracketize('++', '++', function(content, match){ 
+  
+      return '<span class="plusplus">' + content + '</span>'
+    
+  });
+  
+  var render = fm.render(marked('Hello, ++world++'));
+
+  t.equals(render, '<p>Hello, <span class="plusplus">world</span></p>\n');
+
+  t.end();
+
+})
+
 test('inline element should convert to span', function(t){
   
   var fm = flavorMaker();
